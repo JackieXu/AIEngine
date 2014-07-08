@@ -1,7 +1,6 @@
 package com.theaigames.engine;
 
 import com.theaigames.engine.io.BotCommunication;
-import com.theaigames.engine.io.IOHandler;
 import com.theaigames.engine.io.IOPlayer;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -52,11 +51,8 @@ public class Engine implements BotCommunication {
         // Create new process
         Process process = Runtime.getRuntime().exec(command);
         
-        // Attach IOHandler to each process
-        IOHandler handler = new IOHandler(process);
-        
-        // Attach IOHandler to player
-        IOPlayer player = new IOPlayer(handler, this);
+        // Attach IO to process
+        IOPlayer player = new IOPlayer(process, this);
         
         // Add player
         this.players.add(player);
