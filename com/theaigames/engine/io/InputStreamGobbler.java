@@ -32,7 +32,7 @@ public class InputStreamGobbler extends Thread {
             BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
 
             while ((lastLine = bufferedReader.readLine()) != null) {
-                this.player.process(lastLine, this.type);
+                this.player.response = lastLine;
                 buffer.append(lastLine + "\n");
             }
             try {

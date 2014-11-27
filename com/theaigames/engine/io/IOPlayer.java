@@ -18,10 +18,11 @@ public class IOPlayer implements Runnable {
     private OutputStreamWriter inputStream;
     private InputStreamGobbler outputGobbler;
     private InputStreamGobbler errorGobbler;
-    private String response;
     private StringBuilder dump;
     private int errorCounter;
     private final int maxErrors = 2;
+
+    public String response;
     
     public IOPlayer(Process process, BotCommunication engine) {
         this.inputStream = new OutputStreamWriter(process.getOutputStream());
@@ -42,8 +43,8 @@ public class IOPlayer implements Runnable {
     		break;
     	case "output":
     		System.out.println("out: " + line);
-    		addToDump("Output from your bot: \"" + line + "\"\n");
-    		this.response = line;
+    		// addToDump("Output from your bot: \"" + line + "\"\n");
+    		// this.response = line;
     		break;
     	case "error":
     		System.out.println("error: " + line);
@@ -73,12 +74,15 @@ public class IOPlayer implements Runnable {
 			
 			try { Thread.sleep(2); } catch (InterruptedException e) {}
     	}
-		if(this.response.equalsIgnoreCase("No moves"))
+		if(this.response.equalsIgnoreCase("No moves")) {
+            this.response = null;
 			return "";
+        }
 		
 		response = this.response;
 		this.response = null;
 		
+        addToDump("Output from your bot: \"" + response + "\"\n");
 		return response;
     }
     
